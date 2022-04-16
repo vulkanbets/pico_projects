@@ -1,0 +1,38 @@
+
+!!!!!Compile your code!!!!!
+$ mkdir build
+$ cd build/
+$ cmake ..
+$ make
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Below here is how you mount a pico as a mass storage device to load a .uf2 file
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+
+If you are logged in via ssh for example, you may have to mount the mass storage device manually:
+
+$ dmesg | tail
+[ 371.973555] sd 0:0:0:0: [sda] Attached SCSI removable disk
+$ sudo mkdir -p /mnt/pico
+$ sudo mount /dev/sda1 /mnt/pico
+
+
+If you can see files in /mnt/pico then the USB Mass Storage Device has been mounted correctly:
+
+$ ls /mnt/pico/
+INDEX.HTM INFO_UF2.TXT
+
+
+Copy your blink.uf2 onto RP2040:
+
+$ sudo cp blink.uf2 /mnt/pico
+$ sudo sync
+
+
+RP2040 has already disconnected as a USB Mass Storage Device and is running your code, but for tidiness unmount /mnt/pico
+
+$ sudo umount /mnt/pico
+
+
+
